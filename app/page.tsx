@@ -1,95 +1,41 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Posts from "./components/Posts";
+import ProfileImage from "./components/ProfileImage";
+import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
+    <main className="px-6 mx-auto">
+      <ProfileImage />
+      <div className="mb-12 text-center">
+        <p className="mb-3 md:mb-6 text-4xl">
+          Hi, I&#39;m&nbsp;
+          <span className="whitespace-nowrap">
+            <Link
+              href="https://www.linkedin.com/in/anthony-mendoza9/"
+              className="underline dark:decoration-teal-400 hover:text-white hover:bg-black dark:hover:text-black dark:hover:bg-white"
+            >
+              Anthony
+            </Link>
+            .
+          </span>
         </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+        <p className="max-w-2xl mx-auto text-md md:text-lg text-slate-700 dark:text-slate-300">
+          Welcome to my personal blog/portfolio, where I write about what
+          I&#39;m working on and topics that I find interesting. Previously
+          worked at Twitter, focusing on web and our design systems library.
+          <span>
+            {" "}
+            <Link
+              href="/experience"
+              className="select-none text-black dark:text-white underline dark:decoration-teal-400 hover:text-white hover:bg-black dark:hover:text-black dark:hover:bg-white"
+            >
+              Want to learn More?
+            </Link>
+          </span>
+        </p>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <Posts />
     </main>
-  )
+  );
 }
