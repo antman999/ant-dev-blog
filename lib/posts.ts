@@ -1,58 +1,78 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import html from 'remark-html'
+import { compileMDX } from 'next-mdx-remote/rsc'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeSlug from 'rehype-slug'
+import CustomImage from '@/app/components/CustomImage'
+import Video from '@/app/components/Video'
 
-const postsDirectory = path.join(process.cwd(), 'blogposts')
-
-export function getSortedPostsData() {
-    // Get file names under /posts
-    const fileNames = fs.readdirSync(postsDirectory);
-    const allPostsData = fileNames.map((fileName) => {
-        // Remove ".md" from file name to get id
-        const id = fileName.replace(/\.md$/, '');
-
-        // Read markdown file as string
-        const fullPath = path.join(postsDirectory, fileName);
-        const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-        // Use gray-matter to parse the post metadata section
-        const matterResult = matter(fileContents);
-
-        const blogPost: Blogpost = {
-            id,
-            title: matterResult.data.title,
-            date: matterResult.data.date,
+export async function getPostByName(filePath:string){
+    const res = await fetch(`https://raw.githubusercontent.com/antman999/portfolio-data/main/${filePath}`, {
+        headers:{
+          Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          'X-GitHub-Api-Version': '2022-11-28',
         }
-
-        // Combine the data with the id
-        return blogPost
-    });
-    // Sort posts by date
-    return allPostsData.sort((a, b) => a.date < b.date ? 1 : -1);
-}
-
-export async function getPostData(id: string) {
-    const fullPath = path.join(postsDirectory, `${id}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
-
-    const processedContent = await remark()
-        .use(html)
-        .process(matterResult.content);
-
-    const contentHtml = processedContent.toString();
-
-    const blogPostWithHTML: Blogpost & { contentHtml: string } = {
-        id,
-        title: matterResult.data.title,
-        date: matterResult.data.date,
-        contentHtml,
+    })
+    if(!res.ok){
+        return undefined
     }
 
-    // Combine the data with the id
-    return blogPostWithHTML
+    const rawMDX = await res.text()
+    if(rawMDX === '404: Not Found') return undefined
+
+    const { frontmatter, content}  = await compileMDX<{title: string, date: string, tags: string[]}>({
+        source: rawMDX,
+        components: {
+            Video,
+            CustomImage
+        },
+        options: {
+            parseFrontmatter: true,
+            mdxOptions: {
+                rehypePlugins: [
+                    rehypeHighlight,
+                    rehypeSlug,
+                    [rehypeAutolinkHeadings, {
+                        behavior: 'wrap'
+                    }],
+                ],
+            },
+        }
+    })
+
+    const id = filePath.replace(/\.mdx$/, '')
+    const blogPostObj: BlogPost = { meta: { id, title: frontmatter.title, date: frontmatter.date, tags: frontmatter.tags }, content }
+    return blogPostObj
+}
+
+export async function getBlogPostMeta(): Promise<MetaBlog[] | undefined> {
+  const res = await fetch('https://api.github.com/repos/antman999/portfolio-data/git/trees/main?recursive=1', {
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      'X-GitHub-Api-Version': '2022-11-28',
+    },
+  });
+  if (!res.ok) return undefined;
+
+  const repoFileTree = await res.json();
+
+const blogpostsContents = repoFileTree.tree
+  .map((item) => {
+    if (item.path.startsWith('blogposts/') && item.type === 'blob' && item.path.endsWith('.mdx')) {
+      return item;
+    }
+    return null;
+  })
+  .filter((item) => item !== null);
+  const posts: Meta[] = []
+
+  for( const file of blogpostsContents){
+    const post = await getPostByName(file.path)
+    if(post){
+        const {meta} = post 
+        posts.push(meta)
+    } 
+  }
+  return posts.sort((a,b)=> a.date < b.date ? 1 : -1)
 }

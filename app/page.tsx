@@ -5,11 +5,11 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="px-6 mx-auto">
+    <div className="px-6 mx-auto">
       <ProfileImage />
       <div className="mb-12 text-center">
         <p className="mb-3 md:mb-6 text-4xl">
-          Hi, I&#39;m&nbsp;
+          Hi, I'm&nbsp;
           <span className="whitespace-nowrap">
             <Link
               href="https://www.linkedin.com/in/anthony-mendoza9/"
@@ -21,9 +21,9 @@ export default function Home() {
           </span>
         </p>
         <p className="max-w-2xl mx-auto text-md md:text-lg text-slate-700 dark:text-slate-300">
-          Welcome to my personal blog/portfolio, where I write about what
-          I&#39;m working on and topics that I find interesting. Previously
-          worked at Twitter, focusing on web and our design systems library.
+          Welcome to my personal blog/portfolio, where I write about what I'm
+          working on and topics that I find interesting. Previously worked at
+          Twitter, focusing on web and our design systems library.
           <span>
             {" "}
             <Link
@@ -36,6 +36,6 @@ export default function Home() {
         </p>
       </div>
       <Posts />
-    </main>
+    </div>
   );
 }
