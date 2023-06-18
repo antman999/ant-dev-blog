@@ -6,7 +6,7 @@ import React from "react";
 import NotFound from "./not-found";
 import "highlight.js/styles/github-dark-dimmed.css";
 
-export const revalidate = 120;
+export const revalidate = 86400;
 
 type Props = {
   params: {
@@ -39,7 +39,10 @@ export async function generateMetadata({ params: { postId } }: Props) {
 
 export default async function Post({ params: { postId } }: Props) {
   const post = await getPostByName(`/blogposts/${postId}.mdx`);
-  if (!post) NotFound();
+  if (!post) {
+    notFound();
+    return null;
+  }
 
   const { meta, content } = post;
 

@@ -5,7 +5,7 @@ import rehypeSlug from 'rehype-slug'
 import CustomImage from '@/app/components/CustomImage'
 import Video from '@/app/components/Video'
 
-export async function getPostByName(filePath:string){
+export async function getPostByName(filePath:string): Promise<BlogPost | undefined> {
     const res = await fetch(`https://raw.githubusercontent.com/antman999/portfolio-data/main/${filePath}`, {
         headers:{
           Accept: 'application/vnd.github+json',
@@ -57,7 +57,7 @@ export async function getBlogPostMeta(): Promise<MetaBlog[] | undefined> {
 
   const repoFileTree = await res.json();
 
-const blogpostsContents = repoFileTree.tree
+const blogpostsContents = (repoFileTree.tree as any[])
   .map((item) => {
     if (item.path.startsWith('blogposts/') && item.type === 'blob' && item.path.endsWith('.mdx')) {
       return item;
@@ -65,7 +65,7 @@ const blogpostsContents = repoFileTree.tree
     return null;
   })
   .filter((item) => item !== null);
-  const posts: Meta[] = []
+  const posts: MetaBlog[] = []
 
   for( const file of blogpostsContents){
     const post = await getPostByName(file.path)

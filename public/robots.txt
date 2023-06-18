@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: anthony-mendoza.com
+
+# Sitemaps
+Sitemap: anthony-mendoza.com/sitemap.xml
