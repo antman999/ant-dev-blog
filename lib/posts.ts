@@ -1,5 +1,6 @@
 import { compileMDX } from 'next-mdx-remote/rsc'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import BeforeAndAfterTable from '@/app/components/BeforeAndAfterTable'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import CustomImage from '@/app/components/CustomImage'
@@ -22,7 +23,8 @@ export async function getExperience(){
     const {content} = await compileMDX({
       source: rawMDX, 
       components: {
-        CustomImage
+        CustomImage,
+        BeforeAndAfterTable
       },
       options: {
             parseFrontmatter: true,
