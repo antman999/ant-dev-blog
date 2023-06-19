@@ -30,7 +30,7 @@ export default function Home() {
               href="/experience"
               className="select-none text-black dark:text-white underline dark:decoration-teal-400 hover:text-white hover:bg-black dark:hover:text-black dark:hover:bg-white"
             >
-              Want to learn More?
+              Want to learn more?
             </Link>
           </span>
         </p>

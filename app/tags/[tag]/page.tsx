@@ -11,7 +11,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const posts = await getBlogPostMeta(); //deduped!
+  const posts = await getBlogPostMeta();
 
   if (!posts) return [];
 
@@ -27,7 +27,7 @@ export function generateMetadata({ params: { tag } }: Props) {
 }
 
 export default async function TagPostList({ params: { tag } }: Props) {
-  const posts = await getBlogPostMeta(); //deduped!
+  const posts = await getBlogPostMeta();
 
   if (!posts)
     return <p className="mt-10 text-center">Sorry, no posts available.</p>;

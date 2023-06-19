@@ -5,6 +5,41 @@ import rehypeSlug from 'rehype-slug'
 import CustomImage from '@/app/components/CustomImage'
 import Video from '@/app/components/Video'
 
+export async function getExperience(){
+  const res = await fetch('https://raw.githubusercontent.com/antman999/portfolio-data/main/experience.mdx', {
+        headers:{
+          Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          'X-GitHub-Api-Version': '2022-11-28',
+        }
+    })
+
+    if(!res.ok) return undefined
+
+    const rawMDX = await res.text()
+    if(rawMDX === '404: Not Found') return undefined
+    
+    const {content} = await compileMDX({
+      source: rawMDX, 
+      components: {
+        CustomImage
+      },
+      options: {
+            parseFrontmatter: true,
+            mdxOptions: {
+                rehypePlugins: [
+                    rehypeHighlight,
+                    rehypeSlug,
+                    [rehypeAutolinkHeadings, {
+                        behavior: 'wrap'
+                    }],
+                ],
+            },
+        }
+    })
+return content
+}
+
 export async function getPostByName(filePath:string): Promise<BlogPost | undefined> {
     const res = await fetch(`https://raw.githubusercontent.com/antman999/portfolio-data/main/${filePath}`, {
         headers:{

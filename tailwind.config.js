@@ -9,6 +9,11 @@ module.exports = {
   theme: {
     extend: {
       typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            h4: null,
+          },
+        },
         dark: {
           css: {
             color: "white",

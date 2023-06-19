@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="mx-auto mt-24 mb-2 text-center">
+    <footer className="mx-auto mt-24 mb-4 text-center">
       <p className="text-sm md:text-lg text-slate-700 dark:text-slate-300">
         {" "}
         Built with ❤️ by{" "}
