@@ -6,7 +6,7 @@ import React from "react";
 import NotFound from "./not-found";
 import "highlight.js/styles/github-dark-dimmed.css";
 
-export const revalidate = 1;
+export const revalidate = 86400;
 
 type Props = {
   params: {
