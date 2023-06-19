@@ -16,7 +16,7 @@ export default async function Experience() {
         <h2>About Me</h2>
         {experience}
       </section>
-      <div className="flex flex-col gap-2 md:flex-row md:gap-2 mt-16 prose-sm ">
+      <div className="flex flex-col gap-2 md:flex-row md:gap-2 mt-6 md:mt-16 prose-sm ">
         <a
           rel="noopener noreferrer"
           target="_blank"
