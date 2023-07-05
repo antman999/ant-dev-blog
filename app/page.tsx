@@ -11,12 +11,14 @@ export default function Home() {
         <p className="mb-2 md:mb-5 text-2xl md:text-3xl">
           Hi, I'm&nbsp;
           <span className="whitespace-nowrap">
-            <Link
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
               href="https://www.linkedin.com/in/anthony-mendoza9/"
               className="underline dark:decoration-teal-400 hover:text-white hover:bg-black dark:hover:text-black dark:hover:bg-white"
             >
               Anthony
-            </Link>
+            </a>
             .
           </span>
         </p>
