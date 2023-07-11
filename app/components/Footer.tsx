@@ -7,12 +7,14 @@ export default function Footer() {
       <p className="text-sm md:text-lg text-slate-700 dark:text-slate-300">
         {" "}
         Built with ❤️ by{" "}
-        <Link
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
           href="https://www.linkedin.com/in/anthony-mendoza9/"
           className="underline dark:hover:text-teal-300"
         >
           Anthony Mendoza
-        </Link>
+        </a>
       </p>
     </footer>
   );
