@@ -3,7 +3,6 @@ import getFormattedDate from "@/lib/getFormattedDate";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import React from "react";
-import NotFound from "./not-found";
 import "highlight.js/styles/github-dark-dimmed.css";
 
 export const revalidate = 86400;

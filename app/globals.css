@@ -13,10 +13,9 @@
 
   h4 {
     margin-bottom: 0rem;
-   }
+  }
 
-  body{
-    @apply dark:bg-[#0C1C2E]
+  body {
+    @apply dark:bg-[#0C1C2E];
   }
 }
-
